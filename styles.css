@@ -173,11 +173,11 @@ p { font-size: clamp(0.98rem, 1.15vw, 1.08rem); color: var(--text); }
     padding 0.4s cubic-bezier(0.2, 0.7, 0.3, 1);
 }
 .nav.is-scrolled .nav__inner {
-  background: rgba(250, 247, 241, 0.97);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-color: rgba(24, 24, 24, 0.09);
-  box-shadow: 0 14px 34px rgba(18, 16, 15, 0.16);
+  background: rgba(20, 19, 18, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-color: rgba(250, 247, 241, 0.14);
+  box-shadow: 0 16px 38px rgba(14, 13, 12, 0.34);
   padding: 0.5rem clamp(0.9rem, 1.8vw, 1.5rem);
 }
 .nav__logo {
@@ -187,10 +187,7 @@ p { font-size: clamp(0.98rem, 1.15vw, 1.08rem); color: var(--text); }
   position: relative;
 }
 .nav__logo img { height: 58px; width: auto; display: block; transition: height 0.4s cubic-bezier(0.2, 0.7, 0.3, 1), opacity 0.3s ease; }
-.nav__logo-dark { position: absolute; left: 0; top: 50%; transform: translateY(-50%); opacity: 0; }
 .nav.is-scrolled .nav__logo img { height: 40px; }
-.nav.is-scrolled .nav__logo-light { opacity: 0; }
-.nav.is-scrolled .nav__logo-dark { opacity: 1; }
 .nav__links { display: flex; gap: 2rem; }
 .nav__links a {
   font-size: 0.86rem;
@@ -201,7 +198,7 @@ p { font-size: clamp(0.98rem, 1.15vw, 1.08rem); color: var(--text); }
   transition: color 0.25s ease, font-size 0.4s ease;
   white-space: nowrap;
 }
-.nav.is-scrolled .nav__links a { font-size: 0.78rem; color: var(--ink); }
+.nav.is-scrolled .nav__links a { font-size: 0.78rem; }
 .nav__links a:hover { color: var(--accent); }
 .nav__phone {
   font-weight: 700;
@@ -212,14 +209,13 @@ p { font-size: clamp(0.98rem, 1.15vw, 1.08rem); color: var(--text); }
   transition: color 0.25s ease, font-size 0.4s ease;
   white-space: nowrap;
 }
-.nav.is-scrolled .nav__phone { font-size: 0.95rem; color: var(--ink); }
+.nav.is-scrolled .nav__phone { font-size: 0.95rem; }
 .nav__phone:hover { color: var(--accent); }
 .nav__cta { padding: 0.86rem 1.5rem; font-size: 0.82rem; transition: padding 0.4s ease, font-size 0.4s ease; }
 .nav.is-scrolled .nav__cta { padding: 0.72rem 1.3rem; font-size: 0.78rem; }
 
 .nav__burger { display: none; flex-direction: column; gap: 5px; padding: 6px; }
 .nav__burger span { display: block; width: 26px; height: 2px; background: #fff; transition: transform 0.25s ease, opacity 0.25s ease; }
-.nav.is-scrolled .nav__burger span { background: var(--ink); }
 .nav__burger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .nav__burger.is-open span:nth-child(2) { opacity: 0; }
 .nav__burger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
