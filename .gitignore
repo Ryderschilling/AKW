@@ -2,3 +2,8 @@
 node_modules/
 .vercel
 *.log
+
+# Working scratch, not site assets
+_to_delete/
+assets/*.mov
+assets/IMG_*.jpg

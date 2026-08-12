@@ -25,7 +25,7 @@
   <meta name="twitter:image" content="https://akw-excavating.vercel.app/assets/img/og-card.jpg">
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="preload" href="assets/fonts/bricolage-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/archivo-var-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
 
@@ -119,13 +119,29 @@
     }
   ]
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "Pond bank rebuild from the air, AKW Excavating",
+    "description": "Aerial footage of an AKW Excavating pond job in central Illinois: silt and cattails removed, the bank cut back and shaped, and rock set at the waterline.",
+    "thumbnailUrl": "https://akw-excavating.vercel.app/assets/img/pond-air-1-poster.webp",
+    "uploadDate": "2026-08-11",
+    "duration": "PT20S",
+    "contentUrl": "https://akw-excavating.vercel.app/assets/video/pond-air-1.mp4",
+    "publisher": { "@id": "https://akw-excavating.vercel.app/#business" }
+  }
+  </script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
 <header class="nav" id="nav">
   <div class="container nav__inner">
-    <a href="#top" class="nav__logo" aria-label="AKW Excavating home"><img src="assets/img/akw-logo.png" alt="AKW Excavating Inc" width="560" height="346"></a>
+    <a href="#top" class="nav__logo" aria-label="AKW Excavating home">
+      <img class="nav__logo-light" src="assets/img/akw-logo-white.png" alt="AKW Excavating Inc" width="560" height="346">
+      <img class="nav__logo-dark" src="assets/img/akw-logo.png" alt="" aria-hidden="true" width="560" height="346">
+    </a>
     <nav class="nav__links" aria-label="Main">
       <a href="#services">Services</a>
       <a href="#gps">GPS Tile</a>
@@ -159,9 +175,10 @@
   <section class="hero" id="top">
     <picture class="hero__media">
       <source media="(max-width: 640px)" srcset="assets/img/hero-mobile-720.webp" type="image/webp">
-      <source srcset="assets/img/hero-640.webp 640w, assets/img/hero-960.webp 960w, assets/img/hero-1280.webp 1280w" sizes="100vw" type="image/webp">
-      <img src="assets/img/hero-1280.jpg" alt="John Deere dozer grading dark tilled soil into a drainage waterway beside a curved block retaining wall and culvert, with corn fields behind, outside Farmington, Illinois" width="1280" height="960" fetchpriority="high">
+      <source srcset="assets/img/hero-still-640.webp 640w, assets/img/hero-still-1200.webp 1200w" sizes="100vw" type="image/webp">
+      <img src="assets/img/hero-still-1200.jpg" alt="Aerial view straight down on a dozer pushing pond spoil back off the water along a rebuilt bank, central Illinois" width="1200" height="668" fetchpriority="high">
     </picture>
+    <video class="hero__video" id="heroVideo" poster="assets/img/hero-still-1200.webp" width="1200" height="668" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
     <div class="hero__scrim" aria-hidden="true"></div>
     <div class="container hero__content">
       <p class="eyebrow">Excavating contractor · Brimfield, Illinois · Since 2014</p>
@@ -172,7 +189,7 @@
         <a href="tel:+13093031854" class="btn btn--line">Call Kevin: (309) 303-1854</a>
       </div>
     </div>
-    <p class="hero__tag">Waterway grading and retaining wall · Farmington, IL</p>
+    <p class="hero__tag" id="heroTag">Pond cleanout, spoil off the water · Central Illinois</p>
   </section>
 
   <!-- ============ SERVICE PILLARS ============ -->
@@ -210,6 +227,11 @@
 
   <!-- ============ GPS TILE ============ -->
   <section class="gps" id="gps">
+    <picture class="gps__bg">
+      <source srcset="assets/img/gps-bg-1000.webp 1000w, assets/img/gps-bg-1600.webp 1600w" sizes="100vw" type="image/webp">
+      <img src="assets/img/gps-bg-1400.jpg" alt="John Deere tractor pulling a tile plow through corn stubble, installing field tile on central Illinois farm ground" width="1600" height="1208" loading="lazy">
+    </picture>
+    <div class="gps__scrim" aria-hidden="true"></div>
     <div class="container gps__inner">
       <div class="gps__copy" data-reveal>
         <p class="eyebrow eyebrow--light">The part most contractors skip</p>
@@ -223,11 +245,8 @@
         </ol>
         <a href="#book" class="btn btn--accent">Get your field looked at</a>
       </div>
-      <figure class="gps__media" data-reveal>
-        <img src="assets/img/gps-graded-1024.webp" alt="Freshly graded bare earth sloping toward a farm pond after tree removal near Elmwood, Illinois" width="1024" height="768" loading="lazy">
-        <figcaption>Graded and ready for tile · Elmwood, IL</figcaption>
-      </figure>
     </div>
+    <p class="gps__tag">Pulling tile · Central Illinois</p>
   </section>
 
   <!-- ============ RECENT WORK ============ -->
@@ -263,6 +282,48 @@
     </div>
   </section>
 
+  <!-- ============ AERIAL REEL ============ -->
+  <section class="reel" id="reel">
+    <div class="container">
+      <div class="section-head section-head--light" data-reveal>
+        <p class="eyebrow eyebrow--light">From the air</p>
+        <h2>A pond bank, put back right.</h2>
+        <p class="section-sub">Silt and cattails out of the water, the bank cut back and shaped, rock set where the waves hit. Four clips off one AKW pond job this summer.</p>
+      </div>
+      <div class="reel__stage" data-reveal>
+        <video id="reelVideo" class="reel__video" poster="assets/img/pond-air-1-poster.webp" width="1000" height="552" muted loop playsinline preload="none" aria-label="Aerial footage of AKW Excavating rebuilding a pond bank"></video>
+        <button type="button" class="reel__toggle" id="reelToggle" aria-label="Play the clip"><span aria-hidden="true"></span></button>
+        <p class="reel__cap" id="reelCap">Bank cut back and shaped</p>
+      </div>
+      <ol class="reel__list" data-reveal>
+          <li>
+            <button type="button" class="rthumb is-active" aria-pressed="true" data-src="assets/video/pond-air-1.mp4" data-poster="assets/img/pond-air-1-poster.webp" data-cap="Bank cut back and shaped">
+              <img src="assets/img/pond-air-1-thumb.webp" alt="" width="440" height="242" loading="lazy">
+              <span class="rthumb__t">Shaping the bank</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="rthumb" aria-pressed="false" data-src="assets/video/pond-air-2.mp4" data-poster="assets/img/pond-air-2-poster.webp" data-cap="Rock set where the water hits">
+              <img src="assets/img/pond-air-2-thumb.webp" alt="" width="440" height="242" loading="lazy">
+              <span class="rthumb__t">Rock on the waterline</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="rthumb" aria-pressed="false" data-src="assets/video/pond-air-3.mp4" data-poster="assets/img/pond-air-3-poster.webp" data-cap="Spoil pushed back off the water">
+              <img src="assets/img/pond-air-3-thumb.webp" alt="" width="440" height="246" loading="lazy">
+              <span class="rthumb__t">Working the spoil out</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="rthumb" aria-pressed="false" data-src="assets/video/pond-air-4.mp4" data-poster="assets/img/pond-air-4-poster.webp" data-cap="The finished bank, end to end">
+              <img src="assets/img/pond-air-4-thumb.webp" alt="" width="440" height="242" loading="lazy">
+              <span class="rthumb__t">The finished run</span>
+            </button>
+          </li>
+      </ol>
+    </div>
+  </section>
+
   <!-- ============ SERVICE AREA ============ -->
   <section class="area" id="area">
     <div class="container area__inner">
@@ -280,11 +341,12 @@
 
   <!-- ============ ABOUT ============ -->
   <section class="about" id="about">
+    <picture class="about__bg">
+      <source srcset="assets/img/about-bg-1000.webp 1000w, assets/img/about-bg-1600.webp 1600w" sizes="100vw" type="image/webp">
+      <img src="assets/img/about-bg-1400.jpg" alt="Basement excavation dug square with footing shelves cut clean, a farmhouse and road behind it, central Illinois" width="1600" height="1026" loading="lazy">
+    </picture>
+    <div class="about__scrim" aria-hidden="true"></div>
     <div class="container about__inner">
-      <figure class="about__media" data-reveal>
-        <img src="assets/img/about-basement-880.webp" alt="Crew member checking footing lines inside a squared basement excavation on open farm ground near Farmington, Illinois" width="880" height="787" loading="lazy">
-        <figcaption>On the job · Farmington, IL</figcaption>
-      </figure>
       <div class="about__copy" data-reveal>
         <p class="eyebrow">About AKW</p>
         <h2>A family excavating outfit, not a fleet with a sales office.</h2>
@@ -297,6 +359,7 @@
         </ul>
       </div>
     </div>
+    <p class="about__tag">Basement dug and squared · Central Illinois</p>
   </section>
 
   <!-- ============ BOOKING ============ -->

@@ -146,6 +146,106 @@
     quickForm.querySelector('.btn').disabled = true;
   });
 
+  /* ---------- hero video, deferred so it never costs the first paint ---------- */
+  var heroVideo = document.getElementById('heroVideo');
+  if (heroVideo) {
+    var conn = navigator.connection || {};
+    var slow = conn.saveData === true || /^([23]g|slow-2g)$/.test(conn.effectiveType || '');
+    var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var bigEnough = window.matchMedia && window.matchMedia('(min-width: 900px)').matches;
+
+    if (bigEnough && !slow && !still) {
+      var startHero = function () {
+        heroVideo.addEventListener('playing', function () {
+          heroVideo.classList.add('is-on');
+        }, { once: true });
+        heroVideo.src = 'assets/video/hero-1200.mp4';
+        var tryPlay = function () {
+          var hp = heroVideo.play();
+          if (hp && hp.catch) hp.catch(function () {
+            /* a background tab refuses autoplay: try again when it comes forward */
+            document.addEventListener('visibilitychange', function onVis() {
+              if (document.visibilityState === 'visible') {
+                document.removeEventListener('visibilitychange', onVis);
+                tryPlay();
+              }
+            });
+          });
+        };
+        tryPlay();
+      };
+      /* wait for the page to finish loading so the hero photo owns LCP */
+      if (document.readyState === 'complete') setTimeout(startHero, 400);
+      else window.addEventListener('load', function () { setTimeout(startHero, 400); });
+    }
+  }
+
+  /* ---------- aerial reel ---------- */
+  var reelVideo = document.getElementById('reelVideo');
+  if (reelVideo) {
+    var reelStage = reelVideo.parentNode;
+    var reelToggle = document.getElementById('reelToggle');
+    var reelCap = document.getElementById('reelCap');
+    var thumbs = Array.prototype.slice.call(document.querySelectorAll('.rthumb'));
+    var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var loaded = false;
+
+    var paint = function () {
+      var playing = !reelVideo.paused && !reelVideo.ended;
+      reelStage.classList.toggle('is-playing', playing);
+      reelToggle.classList.toggle('is-hidden', playing);
+      reelToggle.setAttribute('aria-label', playing ? 'Pause the clip' : 'Play the clip');
+    };
+
+    var load = function (btn, autoplay) {
+      reelVideo.src = btn.dataset.src;
+      reelVideo.poster = btn.dataset.poster;
+      reelCap.textContent = btn.dataset.cap;
+      loaded = true;
+      thumbs.forEach(function (t) {
+        var on = t === btn;
+        t.classList.toggle('is-active', on);
+        t.setAttribute('aria-pressed', String(on));
+      });
+      if (autoplay) {
+        var p = reelVideo.play();
+        if (p && p.catch) p.catch(function () { paint(); });
+      }
+      paint();
+    };
+
+    thumbs.forEach(function (btn) {
+      btn.addEventListener('click', function () { load(btn, true); });
+    });
+
+    reelToggle.addEventListener('click', function () {
+      if (!loaded) { load(thumbs[0], true); return; }
+      if (reelVideo.paused) {
+        var p = reelVideo.play();
+        if (p && p.catch) p.catch(function () { paint(); });
+      } else {
+        reelVideo.pause();
+      }
+    });
+
+    reelVideo.addEventListener('play', paint);
+    reelVideo.addEventListener('pause', paint);
+
+    /* only fetch the clip once the section is actually on screen */
+    if ('IntersectionObserver' in window) {
+      var rio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting && !loaded) {
+            load(thumbs[0], !calm);
+            rio.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+      rio.observe(reelStage);
+    }
+    paint();
+  }
+
   /* ---------- footer year ---------- */
   document.getElementById('year').textContent = String(new Date().getFullYear());
 })();
