@@ -15,16 +15,38 @@
   /* ---------- mobile menu ---------- */
   var burger = document.getElementById('burger');
   var menu = document.getElementById('mobilemenu');
+  var menuOpen = false;
+  var menuTimer = null;
+
   var setMenu = function (open) {
+    if (open === menuOpen) return;
+    menuOpen = open;
     burger.classList.toggle('is-open', open);
     burger.setAttribute('aria-expanded', String(open));
-    menu.hidden = !open;
     document.body.style.overflow = open ? 'hidden' : '';
-    if (open) nav.classList.add('is-scrolled');
-    else onScroll();
+    clearTimeout(menuTimer);
+
+    if (open) {
+      menu.hidden = false;
+      /* one frame with the panel laid out but still off screen, so the
+         browser has something to transition from */
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { menu.classList.add('is-open'); });
+      });
+      nav.classList.add('is-scrolled');
+    } else {
+      menu.classList.remove('is-open');
+      menuTimer = setTimeout(function () {
+        if (!menuOpen) menu.hidden = true;
+      }, 520);
+      onScroll();
+    }
   };
   burger.addEventListener('click', function () {
-    setMenu(menu.hidden);
+    setMenu(!menuOpen);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && menuOpen) setMenu(false);
   });
   menu.querySelectorAll('a').forEach(function (a) {
     a.addEventListener('click', function () { setMenu(false); });
@@ -44,6 +66,36 @@
     revealed.forEach(function (el) { io.observe(el); });
   } else {
     revealed.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* ---------- recent work: swipe rail progress on phones ---------- */
+  var workGrid = document.getElementById('workGrid');
+  var workDots = document.getElementById('workDots');
+  if (workGrid && workDots) {
+    var cards = workGrid.querySelectorAll('.job');
+    var i;
+    for (i = 0; i < cards.length; i += 1) {
+      workDots.appendChild(document.createElement('i'));
+    }
+    var bars = workDots.querySelectorAll('i');
+    var markWork = function () {
+      /* the rail only exists under 700px; above that the dots are hidden
+         and this is a no-op the browser never paints */
+      var card = cards[0];
+      if (!card) return;
+      var step = card.getBoundingClientRect().width + 13.6; /* card + gap */
+      var idx = Math.round(workGrid.scrollLeft / step);
+      if (idx < 0) idx = 0;
+      if (idx > bars.length - 1) idx = bars.length - 1;
+      for (var k = 0; k < bars.length; k += 1) {
+        bars[k].classList.toggle('is-on', k <= idx);
+      }
+    };
+    markWork();
+    workGrid.addEventListener('scroll', function () {
+      window.requestAnimationFrame(markWork);
+    }, { passive: true });
+    window.addEventListener('resize', markWork);
   }
 
   /* ---------- booking: day grid ---------- */

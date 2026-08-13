@@ -224,7 +224,12 @@ p { font-size: clamp(0.98rem, 1.15vw, 1.08rem); color: var(--text); }
   position: fixed; inset: 0; z-index: 90;
   background: var(--dark);
   padding: 6.4rem clamp(1.25rem, 6vw, 3rem) 2rem;
+  /* slides down from under the bar, then the links stagger in behind it */
+  transform: translateY(-101%);
+  transition: transform 0.52s cubic-bezier(0.16, 0.86, 0.28, 1);
+  will-change: transform;
 }
+.mmenu.is-open { transform: translateY(0); }
 .mmenu nav { display: flex; flex-direction: column; gap: 0.4rem; }
 .mmenu a {
   font-family: var(--font-display);
@@ -233,6 +238,21 @@ p { font-size: clamp(0.98rem, 1.15vw, 1.08rem); color: var(--text); }
   color: var(--bg);
   padding: 0.55rem 0;
   border-bottom: 1px solid var(--line-light);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.34s ease, transform 0.44s cubic-bezier(0.16, 0.86, 0.28, 1);
+}
+.mmenu.is-open a { opacity: 1; transform: none; }
+.mmenu.is-open a:nth-child(1) { transition-delay: 0.16s; }
+.mmenu.is-open a:nth-child(2) { transition-delay: 0.21s; }
+.mmenu.is-open a:nth-child(3) { transition-delay: 0.26s; }
+.mmenu.is-open a:nth-child(4) { transition-delay: 0.31s; }
+.mmenu.is-open a:nth-child(5) { transition-delay: 0.36s; }
+.mmenu.is-open a:nth-child(6) { transition-delay: 0.41s; }
+.mmenu.is-open a:nth-child(7) { transition-delay: 0.46s; }
+@media (prefers-reduced-motion: reduce) {
+  .mmenu, .mmenu a { transition: none; }
+  .mmenu a { opacity: 1; transform: none; }
 }
 .mmenu__book { color: var(--accent) !important; }
 .mmenu__phone { font-family: var(--font-body) !important; font-size: 1.05rem !important; font-weight: 700; border-bottom: none !important; margin-top: 0.8rem; }
@@ -426,6 +446,9 @@ p { font-size: clamp(0.98rem, 1.15vw, 1.08rem); color: var(--text); }
   margin: 0.25rem 0 0.45rem;
 }
 .job figcaption em { font-style: normal; font-size: 0.92rem; color: var(--text); }
+
+/* swipe hint and dots only exist once the grid turns into a rail */
+.work__hint, .work__dots { display: none; }
 
 /* ---------- aerial reel ---------- */
 
@@ -868,7 +891,58 @@ html.js [data-reveal].in { opacity: 1; transform: none; }
   .svc { padding: 1.65rem 1.4rem 1.8rem; gap: 0.9rem; }
   .svc__for { margin-top: 0.4rem; }
   .gps__steps { margin: 1.5rem 0 2rem; }
-  .work__grid { grid-template-columns: 1fr; }
+  /* recent work turns into a swipe rail, full bleed past the gutter */
+  .work__grid {
+    display: flex;
+    grid-template-columns: none;
+    gap: 0.85rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 1.35rem;
+    margin-inline: -1.35rem;
+    padding: 0 1.35rem 0.25rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .work__grid::-webkit-scrollbar { display: none; }
+  .job {
+    flex: 0 0 78vw;
+    max-width: 340px;
+    scroll-snap-align: start;
+  }
+  .job img {
+    width: 100%;
+    height: auto;
+    flex: none;
+    aspect-ratio: 4 / 5;
+  }
+  .job figcaption { padding-top: 0.85rem; }
+
+  .work__hint {
+    display: block;
+    margin-top: 1rem;
+    font-size: 0.74rem;
+    font-weight: 650;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .work__hint span { color: var(--accent); }
+  .work__dots {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 1.5rem;
+  }
+  .work__dots i {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: var(--line);
+    transition: background-color 0.25s ease;
+  }
+  .work__dots i.is-on { background: var(--accent); }
+
   .about__facts li { flex-direction: column; align-items: flex-start; gap: 0.1rem; }
   .about__facts strong { min-width: 0; }
   .reel__cap { font-size: 0.66rem; padding: 0.6rem 0.9rem; }
