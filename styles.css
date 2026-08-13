@@ -815,17 +815,64 @@ html.js [data-reveal].in { opacity: 1; transform: none; }
 }
 
 @media (max-width: 700px) {
-  .nav__phone { font-size: 0.88rem; }
+  .container { padding: 0 1.35rem; }
+
+  /* nav sits lighter on a phone: smaller mark, tighter bar */
+  .nav { padding: 0.8rem 0; }
+  .nav.is-scrolled { padding: 0.5rem 0; }
+  .nav__inner { gap: 1rem; padding: 0.15rem 0; }
+  .nav.is-scrolled .nav__inner { padding: 0.38rem 0.8rem; }
+  .nav__logo img { height: 40px; }
+  .nav.is-scrolled .nav__logo img { height: 32px; }
+  .nav__phone { font-size: 0.84rem; padding-bottom: 0.1rem; }
+  .nav.is-scrolled .nav__phone { font-size: 0.82rem; }
+  .nav__burger { padding: 4px; gap: 4px; }
+  .nav__burger span { width: 22px; }
+  .nav__burger.is-open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .nav__burger.is-open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+  .mmenu { padding-top: 5.4rem; }
+  .mmenu a { font-size: 1.5rem; }
+
+  /* hero: left rail instead of a centered block, so the lines stop
+     stacking into one dense wall of type */
   .hero { min-height: 100svh; }
-  .hero__content { padding-top: 6.5rem; padding-bottom: 5rem; }
-  .hero__content h1 { max-width: none; }
-  .hero__actions { flex-direction: column; align-items: stretch; }
+  .hero__content {
+    text-align: left;
+    padding-top: 6rem;
+    padding-bottom: 3.6rem;
+  }
+  .hero__content .eyebrow { font-size: 0.94rem; margin-bottom: 0.6rem; }
+  .hero__content h1 {
+    max-width: none;
+    margin-inline: 0;
+    font-size: clamp(2rem, 8.3vw, 3.05rem);
+    line-height: 1.08;
+  }
+  .hero__sub {
+    max-width: 42ch;
+    margin: 1.15rem 0 1.85rem;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  .hero__actions { flex-direction: column; align-items: stretch; justify-content: flex-start; }
+  .hero__actions .btn { padding: 1.05rem 1.4rem; }
   .hero__actions .btn + .btn { margin-left: 0; margin-top: -1px; }
   .hero__tag { display: none; }
+
+  /* room to breathe between and inside sections */
+  h2 { font-size: clamp(1.9rem, 7.6vw, 2.7rem); line-height: 1.08; }
+  .services, .work, .about, .gps, .book, .reel, .area { padding: 4.6rem 0; }
+  .section-head { margin-bottom: 2.1rem; }
   .services__grid { grid-template-columns: 1fr; }
+  .svc { padding: 1.65rem 1.4rem 1.8rem; gap: 0.9rem; }
+  .svc__for { margin-top: 0.4rem; }
+  .gps__steps { margin: 1.5rem 0 2rem; }
   .work__grid { grid-template-columns: 1fr; }
+  .about__facts li { flex-direction: column; align-items: flex-start; gap: 0.1rem; }
+  .about__facts strong { min-width: 0; }
   .reel__cap { font-size: 0.66rem; padding: 0.6rem 0.9rem; }
   .rthumb__t { font-size: 0.7rem; padding: 0.6rem 0.75rem 0.75rem; }
+  .booking { padding: 1.4rem 1.25rem 1.6rem; }
   .booking__days { grid-template-columns: repeat(3, 1fr); }
   .booking__fields { grid-template-columns: 1fr; }
   .footer__grid { grid-template-columns: 1fr; }

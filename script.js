@@ -152,14 +152,20 @@
     var conn = navigator.connection || {};
     var slow = conn.saveData === true || /^([23]g|slow-2g)$/.test(conn.effectiveType || '');
     var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var bigEnough = window.matchMedia && window.matchMedia('(min-width: 900px)').matches;
 
-    if (bigEnough && !slow && !still) {
+    /* runs on phones too. the clip is ~0.7 MB, preload none, and it only
+       starts after load + 400ms, so the hero photo still owns LCP. */
+    if (!slow && !still) {
+      /* phones get a portrait cut of the same clip, so the frame is not
+         cropped down to a narrow strip by object-fit: cover */
+      var phone = window.matchMedia && window.matchMedia('(max-width: 700px)').matches;
+
       var startHero = function () {
         heroVideo.addEventListener('playing', function () {
           heroVideo.classList.add('is-on');
         }, { once: true });
-        heroVideo.src = 'assets/video/hero-1200.mp4';
+        if (phone) heroVideo.poster = 'assets/img/hero-mobile-still.webp';
+        heroVideo.src = phone ? 'assets/video/hero-mobile.mp4' : 'assets/video/hero-1200.mp4';
         var tryPlay = function () {
           var hp = heroVideo.play();
           if (hp && hp.catch) hp.catch(function () {
