@@ -817,20 +817,21 @@ html.js [data-reveal].in { opacity: 1; transform: none; }
 @media (max-width: 700px) {
   .container { padding: 0 1.35rem; }
 
-  /* nav sits lighter on a phone: smaller mark, tighter bar */
-  .nav { padding: 0.8rem 0; }
-  .nav.is-scrolled { padding: 0.5rem 0; }
-  .nav__inner { gap: 1rem; padding: 0.15rem 0; }
-  .nav.is-scrolled .nav__inner { padding: 0.38rem 0.8rem; }
-  .nav__logo img { height: 40px; }
-  .nav.is-scrolled .nav__logo img { height: 32px; }
-  .nav__phone { font-size: 0.84rem; padding-bottom: 0.1rem; }
-  .nav.is-scrolled .nav__phone { font-size: 0.82rem; }
-  .nav__burger { padding: 4px; gap: 4px; }
-  .nav__burger span { width: 22px; }
-  .nav__burger.is-open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-  .nav__burger.is-open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-  .mmenu { padding-top: 5.4rem; }
+  /* nav: the side padding lives on .nav, so the scrolled bar floats off
+     the edges instead of running full bleed */
+  .nav { padding: 0.75rem 1.1rem; }
+  .nav.is-scrolled { padding: 0.55rem 1.1rem; }
+  .nav__inner { gap: 0.9rem; padding: 0.15rem 0.25rem; }
+  .nav.is-scrolled .nav__inner { padding: 0.5rem 0.85rem; }
+  .nav__logo img { height: 50px; }
+  .nav.is-scrolled .nav__logo img { height: 42px; }
+  .nav__phone { font-size: 1rem; padding-bottom: 0.14rem; }
+  .nav.is-scrolled .nav__phone { font-size: 0.96rem; }
+  .nav__burger { padding: 5px 2px; gap: 5px; }
+  .nav__burger span { width: 27px; height: 2px; }
+  .nav__burger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav__burger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mmenu { padding-top: 6.1rem; }
   .mmenu a { font-size: 1.5rem; }
 
   /* hero: left rail instead of a centered block, so the lines stop
