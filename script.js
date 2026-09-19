@@ -98,105 +98,233 @@
     window.addEventListener('resize', markWork);
   }
 
-  /* ---------- booking: day grid ---------- */
+  /* ---------- booking ----------
+     Days are counted in Chicago time so the page and /api/book agree on what
+     "tomorrow" is for a visitor anywhere. /api/slots greys out anything already
+     on AKW's calendar; if the calendar is not connected every slot stays open
+     and the request still emails straight to AKW. */
   var dayGrid = document.getElementById('dayGrid');
-  var pickedLine = document.getElementById('pickedLine');
-  var picked = { day: null, time: null };
-  var DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-  var today = new Date();
-  var added = 0;
-  var offset = 1;
-  while (added < 12) {
-    var d = new Date(today.getFullYear(), today.getMonth(), today.getDate() + offset);
-    offset += 1;
-    if (d.getDay() === 0) continue; /* no Sundays */
-    var b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'day';
-    b.setAttribute('role', 'option');
-    b.setAttribute('aria-selected', 'false');
-    b.dataset.label = DOW[d.getDay()] + ', ' + MON[d.getMonth()] + ' ' + d.getDate();
-    b.innerHTML =
-      '<span class="day__dow">' + DOW[d.getDay()] + '</span>' +
-      '<span class="day__num">' + d.getDate() + '</span>' +
-      '<span class="day__mon">' + MON[d.getMonth()] + '</span>';
-    dayGrid.appendChild(b);
-    added += 1;
-  }
-
-  var updatePicked = function () {
-    if (picked.day && picked.time) {
-      pickedLine.textContent = 'Requested: ' + picked.day + ' at ' + picked.time;
-    } else if (picked.day) {
-      pickedLine.textContent = picked.day + ' · now pick a time';
-    } else {
-      pickedLine.textContent = '';
-    }
-  };
-
-  dayGrid.addEventListener('click', function (e) {
-    var btn = e.target.closest('.day');
-    if (!btn) return;
-    dayGrid.querySelectorAll('.day').forEach(function (el) {
-      el.setAttribute('aria-selected', 'false');
-    });
-    btn.setAttribute('aria-selected', 'true');
-    picked.day = btn.dataset.label;
-    updatePicked();
-  });
-
-  var slotGrid = document.getElementById('slotGrid');
-  slotGrid.addEventListener('click', function (e) {
-    var btn = e.target.closest('.slot');
-    if (!btn) return;
-    slotGrid.querySelectorAll('.slot').forEach(function (el) {
-      el.setAttribute('aria-selected', 'false');
-    });
-    btn.setAttribute('aria-selected', 'true');
-    picked.time = btn.dataset.time;
-    updatePicked();
-  });
-
-  /* ---------- booking submit ---------- */
   var bookingForm = document.getElementById('bookingForm');
-  var bookErr = document.getElementById('bookErr');
-  var bookDone = document.getElementById('bookDone');
-  var bookDoneLine = document.getElementById('bookDoneLine');
+  if (dayGrid && bookingForm) {
+    var pickedLine = document.getElementById('pickedLine');
+    var slotGrid = document.getElementById('slotGrid');
+    var bookErr = document.getElementById('bookErr');
+    var bookDone = document.getElementById('bookDone');
+    var bookDoneLine = document.getElementById('bookDoneLine');
+    var bookBtn = bookingForm.querySelector('.booking__submit');
+    var picked = { day: null, dayLabel: null, time: null, timeLabel: null };
+    var taken = {};
+    var DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    var DOWL = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-  bookingForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var name = document.getElementById('bname').value.trim();
-    var phone = document.getElementById('bphone').value.trim();
-    var town = document.getElementById('btown').value.trim();
-    var type = document.getElementById('btype').value;
-    var ok = picked.day && picked.time && name && phone && town && type;
-    bookErr.hidden = !!ok;
-    if (!ok) return;
-    bookDoneLine.textContent = name + ', you asked for ' + picked.day + ' at ' + picked.time + ' for ' + type.toLowerCase() + ' near ' + town + '.';
-    bookDone.hidden = false;
-    bookDone.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    bookingForm.querySelector('.booking__submit').textContent = 'Request sent';
-    bookingForm.querySelector('.booking__submit').disabled = true;
-  });
+    var chicagoToday = function () {
+      try {
+        return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Chicago', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+      } catch (e) {
+        var n = new Date();
+        return n.getFullYear() + '-' + String(n.getMonth() + 1).padStart(2, '0') + '-' + String(n.getDate()).padStart(2, '0');
+      }
+    };
+    var localDays = function () {
+      var out = [];
+      var t = new Date(chicagoToday() + 'T12:00:00Z').getTime();
+      while (out.length < 12) {
+        t += 86400000;
+        var d = new Date(t);
+        if (d.getUTCDay() === 0) continue; /* no Sundays */
+        out.push(d.toISOString().slice(0, 10));
+      }
+      return out;
+    };
+
+    var drawDays = function (list) {
+      dayGrid.innerHTML = '';
+      list.slice(0, 12).forEach(function (ymd) {
+        var d = new Date(ymd + 'T12:00:00Z');
+        var full = (taken[ymd] || []).length >= slotGrid.querySelectorAll('.slot').length;
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'day';
+        b.setAttribute('role', 'option');
+        b.setAttribute('aria-selected', String(picked.day === ymd));
+        b.dataset.date = ymd;
+        b.dataset.label = DOWL[d.getUTCDay()] + ', ' + MON[d.getUTCMonth()] + ' ' + d.getUTCDate();
+        b.setAttribute('aria-label', b.dataset.label + (full ? ', fully booked' : ''));
+        if (full) { b.disabled = true; b.classList.add('is-full'); }
+        b.innerHTML =
+          '<span class="day__dow">' + DOW[d.getUTCDay()] + '</span>' +
+          '<span class="day__num">' + d.getUTCDate() + '</span>' +
+          '<span class="day__mon">' + (full ? 'Full' : MON[d.getUTCMonth()]) + '</span>';
+        dayGrid.appendChild(b);
+      });
+    };
+
+    var paintSlots = function () {
+      var t = picked.day ? (taken[picked.day] || []) : [];
+      slotGrid.querySelectorAll('.slot').forEach(function (el) {
+        var off = t.indexOf(el.dataset.time) >= 0;
+        el.disabled = off;
+        el.classList.toggle('is-taken', off);
+        el.setAttribute('aria-label', el.dataset.label + (off ? ', taken' : ''));
+        if (off && picked.time === el.dataset.time) {
+          picked.time = null; picked.timeLabel = null;
+          el.setAttribute('aria-selected', 'false');
+        }
+      });
+    };
+
+    var updatePicked = function () {
+      if (picked.day && picked.time) pickedLine.textContent = 'Requested: ' + picked.dayLabel + ' at ' + picked.timeLabel;
+      else if (picked.day) pickedLine.textContent = picked.dayLabel + ' · now pick a time';
+      else pickedLine.textContent = '';
+    };
+
+    var dayList = localDays();
+    drawDays(dayList);
+
+    var loadSlots = function () {
+      if (!window.fetch) return Promise.resolve();
+      return fetch('/api/slots', { cache: 'no-store' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (j) {
+          if (!j || !j.ok) return;
+          taken = j.taken || {};
+          if (j.days && j.days.length) dayList = j.days;
+          if (picked.day && dayList.indexOf(picked.day) < 0) { picked.day = null; picked.dayLabel = null; }
+          drawDays(dayList);
+          paintSlots();
+          updatePicked();
+        })
+        .catch(function () { /* offline or not deployed: every slot stays open */ });
+    };
+    loadSlots();
+
+    dayGrid.addEventListener('click', function (e) {
+      var btn = e.target.closest('.day');
+      if (!btn || btn.disabled) return;
+      dayGrid.querySelectorAll('.day').forEach(function (el) { el.setAttribute('aria-selected', 'false'); });
+      btn.setAttribute('aria-selected', 'true');
+      picked.day = btn.dataset.date;
+      picked.dayLabel = btn.dataset.label;
+      paintSlots();
+      updatePicked();
+    });
+
+    slotGrid.addEventListener('click', function (e) {
+      var btn = e.target.closest('.slot');
+      if (!btn || btn.disabled) return;
+      slotGrid.querySelectorAll('.slot').forEach(function (el) { el.setAttribute('aria-selected', 'false'); });
+      btn.setAttribute('aria-selected', 'true');
+      picked.time = btn.dataset.time;
+      picked.timeLabel = btn.dataset.label;
+      updatePicked();
+    });
+
+    /* /#book-ponds style links from the service pages pre-pick the kind of work */
+    var HASH_TYPE = {
+      'book-drainage': 'Farm drainage or field tile',
+      'book-waterway': 'Waterway',
+      'book-ponds': 'Pond, new or cleanout',
+      'book-siteprep': 'Site prep, basement or grading',
+      'book-clearing': 'Clearing or tree mulching'
+    };
+    var applyHash = function () {
+      var key = (location.hash || '').slice(1);
+      if (!HASH_TYPE[key]) return;
+      document.getElementById('btype').value = HASH_TYPE[key];
+      var book = document.getElementById('book');
+      if (book) book.scrollIntoView();
+    };
+    applyHash();
+    window.addEventListener('hashchange', applyHash);
+
+    var val = function (id) { return document.getElementById(id).value.trim(); };
+
+    bookingForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var data = {
+        day: picked.day, time: picked.time,
+        name: val('bname'), phone: val('bphone'), email: val('bemail'),
+        place: val('btown'), type: document.getElementById('btype').value,
+        notes: val('bnotes'), company: val('bcompany')
+      };
+      var ok = data.day && data.time && data.name && data.phone && data.place && data.type;
+      bookErr.textContent = 'Pick a day and a time, and fill in your name, phone, property location and the kind of work.';
+      bookErr.hidden = !!ok;
+      if (!ok) return;
+
+      bookBtn.disabled = true;
+      bookBtn.textContent = 'Sending…';
+      fetch('/api/book', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+        .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { status: r.status, j: j }; }); })
+        .then(function (res) {
+          if (res.status === 200 && res.j.ok) {
+            bookDoneLine.textContent = data.name + ', you asked for ' + picked.dayLabel + ' at ' + picked.timeLabel +
+              ' for ' + data.type.toLowerCase() + ' near ' + data.place + '.' +
+              (data.email ? ' A confirmation is on its way to ' + data.email + '.' : '');
+            bookDone.hidden = false;
+            bookDone.focus({ preventScroll: true });
+            bookDone.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            bookBtn.textContent = 'Request sent';
+            loadSlots();
+            return;
+          }
+          bookBtn.disabled = false;
+          bookBtn.textContent = 'Request this time';
+          if (res.status === 409) {
+            bookErr.textContent = 'Someone just took that time. Pick another one.';
+            loadSlots();
+          } else if (res.j && res.j.error === 'bad_email') {
+            bookErr.textContent = 'That email does not look right. Fix it or leave it blank.';
+          } else {
+            bookErr.textContent = 'That did not go through. Call Kevin at (309) 303-1854 and he will get you on the schedule.';
+          }
+          bookErr.hidden = false;
+        })
+        .catch(function () {
+          bookBtn.disabled = false;
+          bookBtn.textContent = 'Request this time';
+          bookErr.textContent = 'No connection. Call Kevin at (309) 303-1854 and he will get you on the schedule.';
+          bookErr.hidden = false;
+        });
+    });
+  }
 
   /* ---------- quick note form ---------- */
   var quickForm = document.getElementById('quickForm');
-  var quickErr = document.getElementById('quickErr');
-  var quickDone = document.getElementById('quickDone');
-
-  quickForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var ok = ['qname', 'qphone', 'qmsg'].every(function (id) {
-      return document.getElementById(id).value.trim().length > 0;
+  if (quickForm) {
+    var quickErr = document.getElementById('quickErr');
+    var quickDone = document.getElementById('quickDone');
+    var quickBtn = quickForm.querySelector('.btn');
+    quickForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var q = function (id) { return document.getElementById(id).value.trim(); };
+      var data = { name: q('qname'), phone: q('qphone'), message: q('qmsg'), company: q('qcompany'), page: location.pathname };
+      var ok = data.name && data.phone && data.message;
+      quickErr.textContent = 'Fill in all three fields so we can call you back.';
+      quickErr.hidden = !!ok;
+      if (!ok) return;
+      quickBtn.disabled = true;
+      quickBtn.textContent = 'Sending…';
+      fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+        .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return r.ok && j.ok; }); })
+        .then(function (sent) {
+          if (sent) {
+            quickDone.hidden = false;
+            quickBtn.textContent = 'Sent';
+            return;
+          }
+          throw new Error('fail');
+        })
+        .catch(function () {
+          quickBtn.disabled = false;
+          quickBtn.textContent = 'Send it';
+          quickErr.textContent = 'That did not go through. Call Kevin at (309) 303-1854.';
+          quickErr.hidden = false;
+        });
     });
-    quickErr.hidden = !!ok;
-    if (!ok) return;
-    quickDone.hidden = false;
-    quickForm.querySelector('.btn').textContent = 'Sent';
-    quickForm.querySelector('.btn').disabled = true;
-  });
+  }
 
   /* ---------- hero video, deferred so it never costs the first paint ---------- */
   var heroVideo = document.getElementById('heroVideo');
@@ -304,6 +432,23 @@
     paint();
   }
 
+
+  /* ---------- footer entrance (once, when it scrolls into view) ---------- */
+  var fa = document.querySelectorAll('[data-fa]');
+  if (fa.length) {
+    if ('IntersectionObserver' in window) {
+      var fio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { en.target.classList.add('fa-in'); fio.unobserve(en.target); }
+        });
+      }, { threshold: 0.1 });
+      fa.forEach(function (el) { fio.observe(el); });
+    } else {
+      fa.forEach(function (el) { el.classList.add('fa-in'); });
+    }
+  }
+
   /* ---------- footer year ---------- */
-  document.getElementById('year').textContent = String(new Date().getFullYear());
+  var yr = document.getElementById('year');
+  if (yr) yr.textContent = String(new Date().getFullYear());
 })();

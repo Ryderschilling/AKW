@@ -34,6 +34,10 @@
   <link rel="preload" href="assets/fonts/anton-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/archivo-var-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <meta name="geo.region" content="US-IL">
+  <meta name="geo.placename" content="Brimfield, Illinois">
+  <link rel="alternate" type="text/plain" href="/llms.txt" title="AKW Excavating, plain text summary">
 
   <script type="application/ld+json">
   {
@@ -46,6 +50,13 @@
     "telephone": "+13093031854",
     "email": "Akwexcavating1@gmail.com",
     "foundingDate": "2014",
+    "founder": [{"@type":"Person","name":"Kevin Windish"},{"@type":"Person","name":"Michelle Windish"}],
+    "sameAs": ["https://www.facebook.com/61577637825279"],
+    "hasOfferCatalog": {"@type":"OfferCatalog","name":"Excavating services","itemListElement":[
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Farm drainage and GPS field tile","url":"https://akw-excavating.vercel.app/farm-drainage/"}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Pond construction and cleanout","url":"https://akw-excavating.vercel.app/ponds/"}},
+      {"@type":"Offer","itemOffered":{"@type":"Service","name":"Site prep, basements and grading","url":"https://akw-excavating.vercel.app/site-prep/"}}
+    ]},
     "description": "Excavating contractor in Brimfield, Illinois. Farm drainage, GPS field tile install and mapping, waterway maintenance, pond creation and cleanout, site prep and grading.",
     "address": {
       "@type": "PostalAddress",
@@ -55,12 +66,6 @@
       "addressCountry": "US"
     },
     "geo": { "@type": "GeoCoordinates", "latitude": 40.8384, "longitude": -89.8815 },
-    "openingHoursSpecification": [{
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
-      "opens": "07:00",
-      "closes": "17:00"
-    }],
     "areaServed": [
       {"@type":"City","name":"Brimfield"},
       {"@type":"City","name":"Elmwood"},
@@ -90,7 +95,9 @@
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": "https://akw-excavating.vercel.app/#website",
     "name": "AKW Excavating Inc",
+    "publisher": { "@id": "https://akw-excavating.vercel.app/#business" },
     "url": "https://akw-excavating.vercel.app/"
   }
   </script>
@@ -144,19 +151,20 @@
 
 <header class="nav" id="nav">
   <div class="container nav__inner">
-    <a href="#top" class="nav__logo" aria-label="AKW Excavating home">
+    <div class="nav__line" aria-hidden="true"></div>
+    <a href="/" class="nav__logo" data-fa style="--fa-d:0.1s" aria-label="AKW Excavating home">
       <img src="assets/img/akw-logo-white.png" alt="AKW Excavating Inc" width="560" height="346">
     </a>
-    <nav class="nav__links" aria-label="Main">
-      <a href="#services">Services</a>
-      <a href="#gps">GPS Tile</a>
-      <a href="#work">Recent Work</a>
-      <a href="#area">Service Area</a>
-      <a href="#about">About</a>
+    <nav class="nav__links" aria-label="Main" data-fa style="--fa-d:0.2s">
+      <a href="/farm-drainage/">Field Tile</a>
+      <a href="/ponds/">Ponds</a>
+      <a href="/site-prep/">Site Prep</a>
+      <a href="/#work">Recent Work</a>
+      <a href="/#about">About</a>
     </nav>
-    <a href="tel:+13093031854" class="nav__phone">(309) 303-1854</a>
-    <a href="#book" class="btn btn--accent nav__cta">Book a site visit</a>
-    <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobilemenu">
+    <a href="tel:+13093031854" class="nav__phone" data-fa style="--fa-d:0.3s">(309) 303-1854</a>
+    <a href="#book" class="btn btn--accent nav__cta" data-fa style="--fa-d:0.4s">Book a site visit</a>
+    <button class="nav__burger" id="burger" data-fa style="--fa-d:0.4s" aria-label="Open menu" aria-expanded="false" aria-controls="mobilemenu">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -164,11 +172,11 @@
 
 <div class="mmenu" id="mobilemenu" hidden>
   <nav aria-label="Mobile">
-    <a href="#services">Services</a>
-    <a href="#gps">GPS Tile</a>
-    <a href="#work">Recent Work</a>
-    <a href="#area">Service Area</a>
-    <a href="#about">About</a>
+    <a href="/farm-drainage/">Field Tile and Drainage</a>
+    <a href="/ponds/">Ponds</a>
+    <a href="/site-prep/">Site Prep</a>
+    <a href="/#work">Recent Work</a>
+    <a href="/#about">About</a>
     <a href="#book" class="mmenu__book">Book a site visit</a>
     <a href="tel:+13093031854" class="mmenu__phone">Call Kevin: (309) 303-1854</a>
   </nav>
@@ -210,21 +218,21 @@
           <h3>Farm drainage and field tile</h3>
           <p>Pattern tile, mains and laterals, waterway shaping and maintenance. Every run goes in on GPS grade, so the water moves the day the trench closes and the wet spot stops costing you yield.</p>
           <p class="svc__for">For farmers, farm managers and ag landlords</p>
-          <a class="link-arrow" href="#book">Plan fall tile work<span aria-hidden="true"> &rarr;</span></a>
+          <a class="link-arrow" href="/farm-drainage/">Field tile and drainage<span aria-hidden="true"> &rarr;</span></a>
         </article>
         <article class="svc" data-reveal>
           <p class="svc__num">02</p>
           <h3>Pond creation and maintenance</h3>
           <p>New ponds built to hold, and old ponds brought back. The long-reach excavator pulls silt and cattails from the water without tearing up the bank you want to keep.</p>
           <p class="svc__for">For landowners and homeowners</p>
-          <a class="link-arrow" href="#book">Talk through a pond<span aria-hidden="true"> &rarr;</span></a>
+          <a class="link-arrow" href="/ponds/">Pond building and cleanout<span aria-hidden="true"> &rarr;</span></a>
         </article>
         <article class="svc" data-reveal>
           <p class="svc__num">03</p>
           <h3>Site prep and excavating</h3>
           <p>Basements, footings, final grade, culverts, driveways, clearing and forestry mulching. Dug square, graded to plan, ready for the next trade on schedule.</p>
           <p class="svc__for">For builders, contractors and homeowners</p>
-          <a class="link-arrow" href="#book">Get a site prepped<span aria-hidden="true"> &rarr;</span></a>
+          <a class="link-arrow" href="/site-prep/">Site prep and excavating<span aria-hidden="true"> &rarr;</span></a>
         </article>
       </div>
     </div>
@@ -263,7 +271,7 @@
         <p class="section-sub">Every photo below is an AKW job site. No stock photos anywhere on this page.</p>
         <p class="work__hint" aria-hidden="true">Swipe for more<span> &rarr;</span></p>
       </div>
-      <div class="work__grid" id="workGrid">
+      <div class="work__grid" id="workGrid" tabindex="0" role="region" aria-label="Recent AKW jobs">
         <figure class="job job--tall" data-reveal>
           <img src="assets/img/pond-cleanout-north-peoria-760.webp" srcset="assets/img/pond-cleanout-north-peoria-480.webp 480w, assets/img/pond-cleanout-north-peoria-760.webp 760w" sizes="(max-width: 700px) 94vw, 32vw" alt="CAT 325D long-reach excavator pulling silt and cattails from a pond edge in North Peoria, Illinois, with a tractor and dump cart hauling spoil behind" width="720" height="960" loading="lazy">
           <figcaption><strong>Pond cleanout</strong><span>North Peoria, Illinois</span><em>Long-reach machine out of the water, silt and cattails hauled off, bank left clean.</em></figcaption>
@@ -333,6 +341,80 @@
 
   <!-- ============ SERVICE AREA ============ -->
   <section class="area" id="area">
+    <svg class="area__map" viewBox="0 0 1600 856" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
+    <defs><radialGradient id="amFade" cx="50%" cy="50%" r="50%"><stop offset="0.55" stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient><mask id="amMask"><rect width="1600" height="856" fill="url(#amFade)"/></mask></defs><g mask="url(#amMask)">
+    <line class="am-grid" x1="0" y1="0" x2="0" y2="856"/>
+    <line class="am-grid" x1="80" y1="0" x2="80" y2="856"/>
+    <line class="am-grid" x1="160" y1="0" x2="160" y2="856"/>
+    <line class="am-grid" x1="240" y1="0" x2="240" y2="856"/>
+    <line class="am-grid" x1="320" y1="0" x2="320" y2="856"/>
+    <line class="am-grid" x1="400" y1="0" x2="400" y2="856"/>
+    <line class="am-grid" x1="480" y1="0" x2="480" y2="856"/>
+    <line class="am-grid" x1="560" y1="0" x2="560" y2="856"/>
+    <line class="am-grid" x1="640" y1="0" x2="640" y2="856"/>
+    <line class="am-grid" x1="720" y1="0" x2="720" y2="856"/>
+    <line class="am-grid" x1="800" y1="0" x2="800" y2="856"/>
+    <line class="am-grid" x1="880" y1="0" x2="880" y2="856"/>
+    <line class="am-grid" x1="960" y1="0" x2="960" y2="856"/>
+    <line class="am-grid" x1="1040" y1="0" x2="1040" y2="856"/>
+    <line class="am-grid" x1="1120" y1="0" x2="1120" y2="856"/>
+    <line class="am-grid" x1="1200" y1="0" x2="1200" y2="856"/>
+    <line class="am-grid" x1="1280" y1="0" x2="1280" y2="856"/>
+    <line class="am-grid" x1="1360" y1="0" x2="1360" y2="856"/>
+    <line class="am-grid" x1="1440" y1="0" x2="1440" y2="856"/>
+    <line class="am-grid" x1="1520" y1="0" x2="1520" y2="856"/>
+    <line class="am-grid" x1="0" y1="0" x2="1600" y2="0"/>
+    <line class="am-grid" x1="0" y1="80" x2="1600" y2="80"/>
+    <line class="am-grid" x1="0" y1="160" x2="1600" y2="160"/>
+    <line class="am-grid" x1="0" y1="240" x2="1600" y2="240"/>
+    <line class="am-grid" x1="0" y1="320" x2="1600" y2="320"/>
+    <line class="am-grid" x1="0" y1="400" x2="1600" y2="400"/>
+    <line class="am-grid" x1="0" y1="480" x2="1600" y2="480"/>
+    <line class="am-grid" x1="0" y1="560" x2="1600" y2="560"/>
+    <line class="am-grid" x1="0" y1="640" x2="1600" y2="640"/>
+    <line class="am-grid" x1="0" y1="720" x2="1600" y2="720"/>
+    <line class="am-grid" x1="0" y1="800" x2="1600" y2="800"/>
+    </g>
+    <path class="am-river" d="M1366.2,-274.6 C1366.2,-247.7 1380.5,-166.9 1366.2,-113.1 C1351.8,-59.2 1304.6,2.7 1280.0,48.5 C1255.4,94.2 1236.9,123.8 1218.5,161.5 C1200.0,199.2 1183.6,234.2 1169.2,274.6 C1154.9,315.0 1143.6,366.2 1132.3,403.8 C1121.0,441.5 1111.8,473.8 1101.5,500.8 C1091.3,527.7 1082.1,538.5 1070.8,565.4 C1059.5,592.3 1046.2,630.0 1033.8,662.3 C1021.5,694.6 1017.4,721.5 996.9,759.2 C976.4,796.9 951.8,845.4 910.8,888.5 C869.7,931.5 818.5,969.2 750.8,1017.7 C683.1,1066.2 545.6,1152.3 504.6,1179.2"/>
+    <path class="am-lake" d="M1200.0,210.0 C1193.8,223.5 1174.4,261.2 1163.1,290.8 C1151.8,320.4 1140.5,359.4 1132.3,387.7 C1124.1,416.0 1116.9,448.3 1113.8,460.4"/>
+    <text class="am-water" x="1011" y="767" transform="rotate(-52 1011 767)">ILLINOIS RIVER</text>
+    <circle class="am-ring" cx="723.7" cy="308.5" r="180"/>
+    <circle class="am-ring" cx="723.7" cy="308.5" r="360"/>
+    <circle class="am-ring" cx="723.7" cy="308.5" r="540"/>
+    <circle class="am-home-halo" cx="723.7" cy="308.5" r="22"/><circle class="am-home" cx="723.7" cy="308.5" r="9"/>
+    <text class="am-label am-label--home" x="724" y="285" text-anchor="middle">BRIMFIELD</text>
+    <circle class="am-pin" cx="620.3" cy="408.7" r="5.5"/>
+    <text class="am-label" x="620" y="435" text-anchor="middle">ELMWOOD</text>
+    <circle class="am-pin" cx="574.8" cy="536.3" r="5.5"/>
+    <text class="am-label" x="588" y="541">FARMINGTON</text>
+    <circle class="am-pin" cx="877.5" cy="161.5" r="5.5"/>
+    <text class="am-label" x="891" y="167">PRINCEVILLE</text>
+    <circle class="am-pin" cx="830.8" cy="546.0" r="5.5"/>
+    <text class="am-label" x="831" y="572" text-anchor="middle">HANNA CITY</text>
+    <circle class="am-pin" cx="561.2" cy="407.1" r="5.5"/>
+    <text class="am-label" x="548" y="412" text-anchor="end">YATES CITY</text>
+    <circle class="am-pin" cx="553.8" cy="169.6" r="5.5"/>
+    <text class="am-label" x="567" y="175">WILLIAMSFIELD</text>
+    <circle class="am-pin" cx="973.5" cy="273.0" r="5.5"/>
+    <text class="am-label" x="987" y="278">DUNLAP</text>
+    <circle class="am-pin" cx="843.1" cy="376.4" r="5.5"/>
+    <text class="am-label" x="856" y="381">KICKAPOO</text>
+    <circle class="am-pin" cx="1084.3" cy="542.8" r="5.5"/>
+    <text class="am-label" x="1071" y="548" text-anchor="end">PEORIA</text>
+    <circle class="am-pin" cx="1473.2" cy="499.2" r="5.5"/>
+    <text class="am-label" x="1460" y="504" text-anchor="end">EUREKA</text>
+    <circle class="am-pin" cx="1364.9" cy="387.7" r="5.5"/>
+    <text class="am-label" x="1352" y="393" text-anchor="end">METAMORA</text>
+    <circle class="am-pin" cx="1308.3" cy="526.6" r="5.5"/>
+    <text class="am-label" x="1295" y="532" text-anchor="end">WASHINGTON</text>
+    <circle class="am-pin" cx="535.4" cy="762.5" r="5.5"/>
+    <text class="am-label" x="548" y="767">CANTON</text>
+    <circle class="am-pin" cx="227.7" cy="197.1" r="5.5"/>
+    <text class="am-label" x="241" y="202">KNOXVILLE</text>
+    <circle class="am-pin" cx="121.8" cy="132.5" r="5.5"/>
+    <text class="am-label" x="135" y="137">GALESBURG</text>
+    </svg>
+    <div class="area__scrim" aria-hidden="true"></div>
     <div class="container area__inner">
       <div data-reveal>
         <p class="eyebrow">Service area</p>
@@ -386,12 +468,12 @@
           <fieldset class="booking__times">
             <legend>Pick a time</legend>
             <div class="booking__slots" id="slotGrid" role="listbox" aria-label="Available times">
-              <button type="button" class="slot" data-time="7:00 AM">7:00 AM</button>
-              <button type="button" class="slot" data-time="9:00 AM">9:00 AM</button>
-              <button type="button" class="slot" data-time="11:00 AM">11:00 AM</button>
-              <button type="button" class="slot" data-time="1:00 PM">1:00 PM</button>
-              <button type="button" class="slot" data-time="3:00 PM">3:00 PM</button>
-              <button type="button" class="slot" data-time="5:00 PM">5:00 PM</button>
+              <button type="button" class="slot" role="option" aria-selected="false" data-time="07:00" data-label="7:00 AM">7:00 AM</button>
+              <button type="button" class="slot" role="option" aria-selected="false" data-time="09:00" data-label="9:00 AM">9:00 AM</button>
+              <button type="button" class="slot" role="option" aria-selected="false" data-time="11:00" data-label="11:00 AM">11:00 AM</button>
+              <button type="button" class="slot" role="option" aria-selected="false" data-time="13:00" data-label="1:00 PM">1:00 PM</button>
+              <button type="button" class="slot" role="option" aria-selected="false" data-time="15:00" data-label="3:00 PM">3:00 PM</button>
+              <button type="button" class="slot" role="option" aria-selected="false" data-time="17:00" data-label="5:00 PM">5:00 PM</button>
             </div>
           </fieldset>
           <div class="booking__fields">
@@ -402,6 +484,10 @@
             <div class="field">
               <label for="bphone">Phone</label>
               <input id="bphone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required>
+            </div>
+            <div class="field">
+              <label for="bemail">Email <span class="opt">(optional, for a confirmation)</span></label>
+              <input id="bemail" name="email" type="email" autocomplete="email" inputmode="email">
             </div>
             <div class="field">
               <label for="btown">Where is the property?</label>
@@ -419,14 +505,22 @@
                 <option>Something else</option>
               </select>
             </div>
+            <div class="field field--wide">
+              <label for="bnotes">Anything we should know? <span class="opt">(optional)</span></label>
+              <textarea id="bnotes" name="notes" rows="3" placeholder="Acres, where the water sits, gate code, best time to call"></textarea>
+            </div>
+            <div class="hp" aria-hidden="true">
+              <label for="bcompany">Company</label>
+              <input id="bcompany" name="company" type="text" tabindex="-1" autocomplete="off">
+            </div>
           </div>
           <p class="booking__picked" id="pickedLine" aria-live="polite"></p>
-          <p class="booking__err" id="bookErr" role="alert" hidden>Pick a day and a time, and fill in your name, phone and property location.</p>
+          <p class="booking__err" id="bookErr" role="alert" hidden>Pick a day and a time, and fill in your name, phone, property location and the kind of work.</p>
           <button type="submit" class="btn btn--accent booking__submit">Request this time</button>
-          <p class="booking__note">No obligation. Site visits and estimates are free.</p>
+          <p class="booking__note" id="bookNote">No obligation. Site visits and estimates are free.</p>
         </form>
         <div class="book__aside" data-reveal>
-          <div class="book__done" id="bookDone" hidden>
+          <div class="book__done" id="bookDone" role="status" tabindex="-1" hidden>
             <h3>Got it.</h3>
             <p id="bookDoneLine"></p>
             <p>Kevin or Cooper will call to confirm the time. If it is urgent, call now.</p>
@@ -451,9 +545,13 @@
               <label for="qmsg">What do you need done?</label>
               <textarea id="qmsg" name="message" rows="4" required></textarea>
             </div>
+            <div class="hp" aria-hidden="true">
+              <label for="qcompany">Company</label>
+              <input id="qcompany" name="company" type="text" tabindex="-1" autocomplete="off">
+            </div>
             <p class="booking__err" id="quickErr" role="alert" hidden>Fill in all three fields so we can call you back.</p>
             <button type="submit" class="btn btn--dark">Send it</button>
-            <p class="quickform__done" id="quickDone" hidden>Sent. You will get a call back, usually same day.</p>
+            <p class="quickform__done" id="quickDone" role="status" hidden>Sent. Kevin or Cooper will call you back.</p>
           </form>
         </div>
       </div>
@@ -462,35 +560,50 @@
 
 </main>
 
-<footer class="footer">
-  <div class="container">
-    <div class="footer__grid">
-      <div>
-        <span class="footer__logo"><img src="assets/img/akw-logo-white.png" alt="AKW Excavating Inc" width="560" height="346"></span>
-        <p class="footer__addr">Brimfield, Illinois 61517</p>
-        <p class="footer__hours">Monday to Friday, 7:00 AM to 5:00 PM</p>
+<footer class="sfoot">
+  <div class="sfoot__panel">
+    <div class="sfoot__line" aria-hidden="true"></div>
+    <div class="sfoot__grid">
+      <div class="sfoot__brand" data-fa style="--fa-d:0.1s">
+        <a href="/" class="sfoot__logo" aria-label="AKW Excavating home"><img src="/assets/img/akw-logo-white.png" alt="AKW Excavating Inc" width="560" height="346" loading="lazy"></a>
+        <p class="sfoot__copy">&copy; <span id="year">2026</span> AKW Excavating Inc. All rights reserved.</p>
+        <p class="sfoot__credit">Site built by <a href="https://ryderschilling.com" rel="noopener">Ryder Schilling</a></p>
       </div>
-      <div>
-        <p class="footer__head">Contact</p>
-        <a href="tel:+13093031854">Kevin: (309) 303-1854</a>
-        <a href="tel:+13094469148">Cooper: (309) 446-9148</a>
-        <a href="mailto:Akwexcavating1@gmail.com">Akwexcavating1@gmail.com</a>
+      <div class="sfoot__cols">
+        <div data-fa style="--fa-d:0.1s">
+          <h2 class="sfoot__head">Services</h2>
+          <ul class="sfoot__list">
+            <li><a href="/farm-drainage/">Field tile and drainage</a></li>
+            <li><a href="/farm-drainage/#gps">GPS tile mapping</a></li>
+            <li><a href="/ponds/">Ponds</a></li>
+            <li><a href="/site-prep/">Site prep</a></li>
+          </ul>
+        </div>
+        <div data-fa style="--fa-d:0.2s">
+          <h2 class="sfoot__head">Company</h2>
+          <ul class="sfoot__list">
+            <li><a href="/#about">About AKW</a></li>
+            <li><a href="/#work">Recent work</a></li>
+            <li><a href="/#area">Service area</a></li>
+            <li><a href="/#book">Book a site visit</a></li>
+          </ul>
+        </div>
+        <div data-fa style="--fa-d:0.3s">
+          <h2 class="sfoot__head">Contact</h2>
+          <ul class="sfoot__list">
+            <li><a href="tel:+13093031854"><svg class="sfoot__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Kevin (309) 303-1854</a></li>
+            <li><a href="tel:+13094469148"><svg class="sfoot__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Cooper (309) 446-9148</a></li>
+            <li><a href="mailto:Akwexcavating1@gmail.com"><svg class="sfoot__icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>Email us</a></li>
+          </ul>
+        </div>
+        <div data-fa style="--fa-d:0.4s">
+          <h2 class="sfoot__head">Find us</h2>
+          <ul class="sfoot__list">
+            <li><a href="/#area"><svg class="sfoot__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Brimfield, IL 61517</a></li>
+            <li><a href="https://www.facebook.com/61577637825279" rel="noopener"><svg class="sfoot__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>Facebook</a></li>
+          </ul>
+        </div>
       </div>
-      <div>
-        <p class="footer__head">Services</p>
-        <a href="#services">Farm drainage and field tile</a>
-        <a href="#gps">GPS tile install and mapping</a>
-        <a href="#services">Ponds</a>
-        <a href="#services">Site prep and excavating</a>
-      </div>
-      <div>
-        <p class="footer__head">Service area</p>
-        <p class="footer__towns">Brimfield, Elmwood, Farmington, Princeville, Hanna City, Yates City, Williamsfield, Dunlap, Kickapoo, Peoria, Eureka, Metamora, Washington, Canton, Knoxville, Galesburg. Peoria, Knox, Fulton, Stark and Woodford counties.</p>
-      </div>
-    </div>
-    <div class="footer__bottom">
-      <p>&copy; <span id="year">2026</span> AKW Excavating Inc. All rights reserved.</p>
-      <p>Site built by <a href="https://ryderschilling.com" rel="noopener">Ryder Schilling</a></p>
     </div>
   </div>
 </footer>
