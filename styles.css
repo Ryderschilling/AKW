@@ -1469,3 +1469,75 @@ html.js .nav [data-fa].fa-in {
     opacity 0.8s ease var(--fa-d), filter 0.8s ease var(--fa-d), transform 0.8s ease var(--fa-d),
     color 0.25s ease, background-color 0.22s ease, border-color 0.22s ease, font-size 0.4s ease, padding 0.4s ease;
 }
+
+/* ---------- 09-21 compact booking on phones: less scrolling ---------- */
+@media (max-width: 700px) {
+  .book { padding: 3.2rem 0 3.6rem; }
+  .book .section-head { margin-bottom: 1.4rem; }
+  .book .section-sub { font-size: 0.92rem; }
+  .book__grid { gap: 1rem; }
+  .booking { padding: 1.1rem 0.95rem 1.2rem; }
+  .booking legend, .quickform__label, .phonecard__label { font-size: 0.68rem; margin-bottom: 0.55rem; }
+  .booking__dates { margin-bottom: 1rem; }
+  /* all 12 days in two rows of six */
+  .booking__days { grid-template-columns: repeat(6, 1fr); }
+  .day { padding: 0.42rem 0 0.46rem; min-height: 48px; }
+  .day__dow, .day__mon { font-size: 0.56rem; letter-spacing: 0.06em; }
+  .day__num { font-size: 1.05rem; line-height: 1.15; }
+  .booking__times { margin-bottom: 1rem; }
+  /* six times in two rows of three */
+  .booking__slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; }
+  .slot { padding: 0.55rem 0.2rem; font-size: 0.8rem; min-height: 40px; }
+  /* name + phone side by side, town + job type side by side */
+  .booking__fields { grid-template-columns: 1fr 1fr; gap: 0.65rem 0.6rem; margin-bottom: 0.9rem; }
+  .booking__fields .field:nth-child(3) { grid-column: 1 / -1; }
+  .field label { font-size: 0.74rem; margin-bottom: 0.22rem; }
+  .field label .opt { font-size: 0.7rem; }
+  /* 16px stops iOS from zooming into the field on tap */
+  .field input, .field select, .field textarea { padding: 0.55rem 0.65rem; font-size: 16px; }
+  .field select { padding-right: 1.7rem; text-overflow: ellipsis; }
+  .booking__fields textarea { min-height: 0; height: 4.2rem; }
+  .booking__picked { min-height: 0; margin-bottom: 0.4rem; font-size: 0.9rem; }
+  .booking__note { font-size: 0.76rem; margin-top: 0.55rem; }
+  .book__aside { gap: 0.8rem; }
+  .book__done { padding: 1.1rem; }
+  /* both numbers side by side */
+  .phonecard { padding: 1rem 0.95rem; display: grid; grid-template-columns: 1fr 1fr; column-gap: 0.8rem; }
+  .phonecard__label, .phonecard__mail { grid-column: 1 / -1; }
+  .phonecard__num { font-size: 0.8rem; padding: 0.5rem 0; }
+  .phonecard__num span { font-size: 1.05rem; }
+  .phonecard__mail { font-size: 0.82rem; margin-top: 0.5rem; }
+  .quickform { padding: 1rem 0.95rem; display: grid; grid-template-columns: 1fr 1fr; column-gap: 0.6rem; }
+  .quickform > *:not(.field), .quickform .field:nth-of-type(3) { grid-column: 1 / -1; }
+  .quickform .field { margin-bottom: 0.6rem; }
+  .quickform textarea { height: 4.2rem; }
+}
+@media (max-width: 359px) {
+  .booking__days { grid-template-columns: repeat(4, 1fr); }
+  .booking__fields, .quickform { grid-template-columns: 1fr; }
+}
+
+/* ---------- 09-21 Google review ask, top of the footer on every page ---------- */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.sfoot__review {
+  width: 100%; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1rem 1.6rem;
+  padding: 1.3rem 1.5rem; margin-bottom: 3rem;
+  border: 1px solid var(--line-light); border-radius: 1.25rem;
+  background: rgba(250, 247, 241, 0.04);
+}
+.sfoot__stars { display: flex; gap: 0.2rem; }
+.sfoot__stars svg { width: 1.15rem; height: 1.15rem; fill: #F4B400; }
+.sfoot__rtitle { font-family: var(--font-display); font-size: 1.35rem; letter-spacing: 0.01em; color: var(--bg); line-height: 1.15; }
+.sfoot__rsub { font-size: 0.9rem; color: rgba(244, 241, 230, 0.7); margin-top: 0.25rem; max-width: 56ch; }
+.sfoot__rbtn {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 44px;
+  padding: 0.75rem 1.3rem; background: var(--bg); color: var(--ink);
+  font-weight: 650; font-size: 0.9rem; white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.sfoot__rbtn:hover { background: var(--accent); color: #fff; }
+@media (max-width: 767px) {
+  .sfoot__review { grid-template-columns: 1fr; gap: 0.7rem; padding: 1.1rem; margin-bottom: 2.2rem; text-align: left; }
+  .sfoot__rtitle { font-size: 1.2rem; }
+  .sfoot__rbtn { width: 100%; }
+}

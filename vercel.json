@@ -43,5 +43,12 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/review",
+      "destination": "https://g.page/r/CcS0IMLXIvmFEBM/review",
+      "permanent": false
+    }
   ]
 }
