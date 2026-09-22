@@ -28,4 +28,28 @@
     <image:image><image:loc>https://akw-excavating.vercel.app/assets/img/basement-farmington-760.jpg</image:loc></image:image>
     <image:image><image:loc>https://akw-excavating.vercel.app/assets/img/tree-mulching-brimfield-760.jpg</image:loc></image:image>
   </url>
+  <url>
+    <loc>https://akw-excavating.vercel.app/work/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <priority>0.7</priority>
+    <image:image><image:loc>https://akw-excavating.vercel.app/assets/img/hero-1280.jpg</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://akw-excavating.vercel.app/about/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <priority>0.6</priority>
+    <image:image><image:loc>https://akw-excavating.vercel.app/assets/img/gps-graded-1024.webp</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://akw-excavating.vercel.app/service-area/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <priority>0.7</priority>
+    <image:image><image:loc>https://akw-excavating.vercel.app/assets/img/gps-bg-1400.jpg</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://akw-excavating.vercel.app/book/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://akw-excavating.vercel.app/assets/img/hero-still-1200.jpg</image:loc></image:image>
+  </url>
 </urlset>

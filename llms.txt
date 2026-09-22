@@ -19,6 +19,10 @@ Peoria, Knox, Fulton, Stark and Woodford counties, Illinois. Towns: Brimfield, E
 - [Farm drainage and GPS field tile](https://akw-excavating.vercel.app/farm-drainage/): pattern tile, targeted tile for wet spots, mains and laterals installed with GPS grade control, an as-built GPS tile map handed to the owner, grassed waterways, ditch work. For farmers, farm managers and landowners.
 - [Ponds](https://akw-excavating.vercel.app/ponds/): new pond construction, pond cleanout with a long-reach excavator, silt and cattail removal, bank reshaping, rock at the waterline. For landowners and homeowners.
 - [Site prep and excavating](https://akw-excavating.vercel.app/site-prep/): basements and footings, building pads, final grade, driveways and culverts, land clearing, forestry mulching. For builders, contractors and homeowners.
+- [Recent work](https://akw-excavating.vercel.app/work/): real AKW job photos and aerial pond footage from central Illinois.
+- [About](https://akw-excavating.vercel.app/about/): family excavating business run by Kevin and Michelle Windish in Brimfield, IL since 2014.
+- [Service area](https://akw-excavating.vercel.app/service-area/): Peoria, Knox, Fulton, Stark and Woodford counties, based in Brimfield.
+- [Book a site visit](https://akw-excavating.vercel.app/book/): pick a day and time for a free site visit and estimate.
 
 ## How it works
 1. Kevin walks the property with the owner. Site visits and estimates are free, no obligation.
